@@ -24,7 +24,7 @@ const userSchema= new mongoose.Schema({
     },
     adddress:{
         type:String,
-        required:true
+    
     },
     role:{
         type:Number,
