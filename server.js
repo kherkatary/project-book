@@ -5,12 +5,15 @@ import connectDB from "./config/db.js";
 import authRouter from "./routes/authRoute.js"
 
 
+
+
 dotenv.config()
 //database connection
 connectDB();
 
 const app= express();
-app.use(Express.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
 
@@ -20,7 +23,7 @@ app.use("/api/v1/auth", authRouter);
 
 //APIS
 app.get("/",(req,res)=>{
-    res.redirect('https://sanji.to/');
+    res.send("hello")
 })
 
 const PORT=process.env.PORT || 3000;
