@@ -1,18 +1,37 @@
 import  express  from "express";
-import {registerController, loginController}from "../controllers/authController.js";
+import {registerController, loginController,testController}from "../controllers/authController.js";
+import { isAdmin, requireSignIn } from "../middlewares/authmiddleware.js";
 
 
 
-// router Object
-const router = express.Router();
+// authRouter Object
+const authRouter = express.Router();
  
 // Router for Register || Post method
-router.post('/register',registerController)
+authRouter.post('/register',registerController)
 
 // Route for Login || POST
-router.post("/login",loginController)
+authRouter.post("/login",loginController)
 
+//test route for tokken authorization
+authRouter.get("/test", requireSignIn, isAdmin ,testController);
 
-export default router
+//forgot password routed -------- to be added
+
+// Protected routes for user, eg- dashboard
+authRouter.get("/user-auth", requireSignIn, (req,res)=>{
+    res.status(200).send({
+        ok:true
+    })
+})
+
+// Protected routes for user, eg- admin dashboard
+authRouter.get("/admin-auth", requireSignIn, isAdmin, (req,res)=>{
+    res.status(200).send({
+        ok:true
+    })
+})
+
+export default authRouter
 
 

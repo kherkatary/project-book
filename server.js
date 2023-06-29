@@ -2,9 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
-import authRouter from "./routes/authRoute.js"
-
-
+import cors from 'cors'
+import {authRouter, categoryRouter, productRouter} from "./routes/index.js";
 
 
 dotenv.config()
@@ -12,6 +11,9 @@ dotenv.config()
 connectDB();
 
 const app= express();
+
+//middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
@@ -19,6 +21,8 @@ app.use(morgan('dev'))
 
 //ALL Routes before apis
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/category", categoryRouter);
+app.use("/api/v1/products", productRouter);
 
 
 //APIS
