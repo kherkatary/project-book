@@ -9,10 +9,10 @@ const registerController = async (req, res) => {
         const { name, email, password, phone } = req.body;
 
         //checking validations, 
-        if (!name) {return res.send({ error: "name required" });}
-        if (!password){ return res.send({error: "password required" });}
-        if (!email) {return res.send({ error: "email required" });}
-        if (!phone) {return res.send({ error: "phone required" });}
+        if (!name) {return res.send({ message: "name required" });}
+        if (!password){ return res.send({message: "password required" });}
+        if (!email) {return res.send({ message: "email required" });}
+        if (!phone) {return res.send({ message: "phone required" });}
 
         //checking existing user
         const existingUser = await userModel.findOne({ email: email });
@@ -52,7 +52,7 @@ const loginController = async (req, res) => {
         // validation
         if (!email || !password) return res.status(404).send({
             success: false,
-            message: "invlaid email or password",
+            message: "required email & password",
 
         })
 
@@ -70,16 +70,17 @@ const loginController = async (req, res) => {
             message:'incorrect password'
         })
 
-        const tokken= JWT.sign({_id:user._id},process.env.jwt_encryptKey,{expiresIn:'7d'});
+        const token= JWT.sign({_id:user._id},process.env.jwt_encryptKey,{expiresIn:'7d'});
         res.status(200).send({
             success:true,
             message:"login successfull",
             user:{
                 name:user.name,
                 email:user.email,
-                phone:user.phone
+                phone:user.phone,
+                role: user.role
             },
-            tokken
+            token
         })
 
 
@@ -96,6 +97,12 @@ const loginController = async (req, res) => {
 }
 
 
+const testController= (req,res)=>{
 
-export { registerController, loginController}
+    res.send("protected routed, only accessible if all the middlewares were passed");
+
+}
+
+
+export { registerController, loginController,testController}
 
