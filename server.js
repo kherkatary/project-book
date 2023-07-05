@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import cors from 'cors'
-import {authRouter, categoryRouter, productRouter} from "./routes/index.js";
+import * as Routes from "./routes/index.js";
 
 
 dotenv.config()
@@ -20,9 +20,9 @@ app.use(morgan('dev'))
 
 
 //ALL Routes before apis
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/category", categoryRouter);
-app.use("/api/v1/products", productRouter);
+app.use("/api/v1/auth", Routes.authRouter);
+app.use("/api/v1/category", Routes.categoryRouter);
+app.use("/api/v1/products", Routes.productRouter);
 
 
 //APIS

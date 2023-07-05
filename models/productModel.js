@@ -9,7 +9,8 @@ const productSchema= mongoose.Schema({
 
     slug:{
         type:String,
-        required:true,        
+        required:true,   
+        lowercase:true     
     },
     description:{
         type:String,
@@ -31,11 +32,8 @@ const productSchema= mongoose.Schema({
         required: true
     },
     photo:{
-        type:Buffer,
+        data:Buffer,
         contentType:'string'
-    },
-    shipping:{
-        type:Boolean
     }
 
 

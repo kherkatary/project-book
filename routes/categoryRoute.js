@@ -1,5 +1,5 @@
 import express from 'express'
-import {requireSignIn, isAdmin} from '../middlewares/authmiddleware.js'
+import {requireSignIn, isAdmin} from '../middlewares/index.js'
 import { createCategoryController, getAllCategories, singleCategory } from '../controllers/categoryController.js'
 
 const categoryRouter= express.Router();
