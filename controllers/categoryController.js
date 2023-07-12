@@ -50,11 +50,11 @@ const getAllCategories = async (req, res) => {
 
     try {
 
-        const categories = await categoryModel.find({});
+        const categories = await categoryModel.find({}).sort({name:1});
 
         if(!categories) return res.send({message:"no categories available"});
 
-        return res.status(401).send({
+        return res.status(200).send({
             success:true,
             message:"All category list",
             categories
@@ -102,5 +102,24 @@ const singleCategory=async (req,res)=>{
 
 }
 
+const deleteCategory =async (req,res)=>{
 
-export { createCategoryController, getAllCategories, singleCategory };
+    try{
+        await categoryModel.findByIdAndDelete(req.params.id);
+        return res.status(202).send({
+            message:"Deleted Successfully",
+            success:true
+        })
+
+    } catch(err){
+        return res.status(404).send({
+            message:" Internal Server Error",
+            error: err.message
+            
+        })
+    }
+
+}
+
+
+export { createCategoryController, getAllCategories, singleCategory , deleteCategory};

@@ -1,6 +1,6 @@
 import express from 'express'
 import {requireSignIn, isAdmin} from '../middlewares/index.js'
-import { createCategoryController, getAllCategories, singleCategory } from '../controllers/categoryController.js'
+import { createCategoryController, getAllCategories, singleCategory , deleteCategory} from '../controllers/categoryController.js'
 
 const categoryRouter= express.Router();
 
@@ -16,6 +16,8 @@ categoryRouter.get('/categories/:slug',singleCategory);  // the :slug word can b
 
 //create catagory
 categoryRouter.post('/create-category',requireSignIn,isAdmin, createCategoryController );
+
+categoryRouter.delete('/delete-category/:id', requireSignIn,isAdmin,deleteCategory)
 
 
 
